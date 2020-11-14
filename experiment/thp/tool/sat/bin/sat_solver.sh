@@ -63,8 +63,38 @@ cd "$(dirname "$0")" || (echo "Could not change directory to $0. Exiting..."; ex
 
 if [ "$solver" == "plingeling" ] ; then
   solver_cmd="./"$solver"_glibc -t 1 -g 8 $*"
+elif [ "$solver" == "zchaff03" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "BerkMin561" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "BerkMin62" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "cadical" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "lingeling2013" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "grasp96" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "lingeling_276" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "minisat_2005" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "minisat_1.12b" ] ; then
+  solver_cmd="./"$solver
+elif [ "$solver" == "knuth_cnf_sat13_cdcl.sh" ] ; then
+  solver_cmd="$HOME/satarch/bin/Linux_i686/knuth_cnf_sat13_cdcl.sh"
+elif [ "$solver" == "knuth_cnf_sat13_cdcl_nopp.sh" ] ; then
+  solver_cmd="$HOME/satarch/bin/Linux_i686/knuth_cnf_sat13_cdcl_nopp.sh"
+elif [ "$solver" == "knuth_cnf_sat11_lookahead.sh" ] ; then
+  solver_cmd="$HOME/satarch/bin/Linux_i686/knuth_cnf_sat11_lookahead.sh"
+elif [ "$solver" == "knuth_cnf_sat11_lookahead_nopp.sh" ] ; then
+  solver_cmd="$HOME/satarch/bin/Linux_i686/knuth_cnf_sat11_lookahead_nopp.sh"
+elif [ "$solver" == "knuth_cnf_sat10_dpll.sh" ] ; then
+  solver_cmd="$HOME/satarch/bin/Linux_i686/knuth_cnf_sat10_dpll.sh"
+elif [ "$solver" == "knuth_cnf_sat10_dpll_nopp.sh" ] ; then
+  solver_cmd="$HOME/satarch/bin/Linux_i686/knuth_cnf_sat10_dpll_nopp.sh"
 elif [ "$solver" == "satz_x86_64" ] ; then
-	  solver_cmd="./satz_x86_64 $*"
+  solver_cmd="./satz_x86_64 $*"
 elif [ "$solver" == "sato3.2" ] ; then
   solver_cmd="./sato3.2 $*"
 elif [ "$solver" == "lingelingplain" ] ; then
@@ -97,7 +127,13 @@ elif [ "$solver" == "siege_v3" ] ; then
   solver_cmd="./siege_v1 $*"
 elif [ "$solver" == "siege_v4" ] ; then
   solver_cmd="./siege_v1 $*"
-elif [ "$solver" == "ubcsat2006gsat" ] ; then
+elif [ "$solver" == "minisat_core" ] ; then
+  solver_cmd="./minisat_core $*"
+elif [ "$solver" == "minisat_simp" ] ; then
+  solver_cmd="./minisat_simp $*"
+elif [ "$solver" == "glucose-syrup-4.1" ] ; then
+  solver_cmd="./glucose-syrup-4.1 $*"
+elif  [ "$solver" == "ubcsat2006gsat" ] ; then
   solver_cmd="./ubcsat2006 $* -alg gsat -solve -i"
 elif [ "$solver" == "ubcsat2006gsats" ] ; then
   solver_cmd="./ubcsat2006 $* -alg gsat -v simple -solve -i"

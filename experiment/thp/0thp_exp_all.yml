@@ -4,7 +4,8 @@ description: Benchmark for different runtimes with and without glibc hack
 limits:
   time: 900 # s
 #  time: 3600
-  memory: 8048 # mb
+  memory: 1024 #mb
+  #  memory: 8048 # mb
   scheduler_memory: 32768 #mb
 
 steps:
@@ -42,6 +43,23 @@ observers:
 #        output: statistics/cactus.ipynb
 
 tasks:
+#  dimacs2:
+#    type: file
+#    path: /files/00-DBAI/home/jfichte/projects/p_gpusat/automated-reasoner-builds/benchmarks/DIMACS-2
+#    extract_archives: false
+#    patterns: |
+#      **/*.cnf
+#      !**/.*
+#      !**/.*~
+#  satlib:
+#    type: file
+#    path: /files/00-DBAI/home/jfichte/projects/p_gpusat/automated-reasoner-builds/benchmarks/satlib
+#    extract_archives: false
+#    patterns: |
+#      **/*.cnf
+#      !**/*.gz
+#      !**/.*
+#      !**/.*~
   sat_gauss_bench:
     type: file
 #    urls:
@@ -50,7 +68,7 @@ tasks:
 #    path: ./tasks/thp/sat/
     extract_archives: true
     patterns: |
-      **/*
+      **/* 
       !**/*.tar.bz2
       !**/*.tar.xz
       !**/*.tar.gz
@@ -116,7 +134,6 @@ tasks:
 # #
 # #      4step.cnf.gz
 # #TODO: separate runs
-
 tools:
   sat:
     module: experiment.thp.tool.sat.satExecutor.SATTool
@@ -124,24 +141,42 @@ tools:
       #name of parameter configuration: we may have multiple ones
       default:
         s:
+          - BerkMin561
+          - BerkMin62
+          - zchaff03
 #          - minisat
+#          - knuth_cnf_sat13_cdcl.sh       
+#          - knuth_cnf_sat13_cdcl_nopp.sh
+#          - knuth_cnf_sat11_lookahead.sh
+#          - knuth_cnf_sat11_lookahead_nopp.sh
+#          - knuth_cnf_sat10_dpll.sh
+#          - knuth_cnf_sat10_dpll_nopp.sh
 #          - mergesat
 #          - plingeling
+#          - grasp96
+#          - lingeling_276
+#          - minisat_2005
+#          - minisat_1.12b
 #          - glucose-4.2.1
 #          - lingeling
+#          - cadical
+#          - lingeling2013
 #          - lingelingplain
 #          - MapleLCMDiscChronoBT-DL-v3
 #          - zchaff.2001
 #          - sato3.2 
-          - satz_x86_64 #TODO
+#          - glucose-syrup-4.1
+#          - minisat_simp
+#          - minisat_core
+#          - satz_x86_64 #TODO
 #          - zchaff.2001.2.17_i686
 #          - zchaff.2001.2.17_32
 #          - zchaff.2004.05.13
 #          - zchaff.2004.11.15
 #          - zchaff.2007.03.12_x64
-          - grasp.1996_jkf_mh
-          - grasp.2008.06.22_armin1
-          - grasp.2008.06.22_armin2
+#          - grasp.1996_jkf_mh
+#          - grasp.2008.06.22_armin1
+#          - grasp.2008.06.22_armin2
 #          - cryptominisat5
 #          - belsat
 # DOES NOT WORK YET
@@ -253,6 +288,9 @@ runs:
   sat:
     all:
       - sat_gauss_bench
+#      - satlib
+#      - dimacs2
+#      - sat_gauss_bench
 #      - sat2014_app_bench
 #  asp:
 #    all:
