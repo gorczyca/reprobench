@@ -20,18 +20,18 @@ ___
     ```
     sudo apt-get install libz-dev
     ```
-    Put the compiled **mu_toksia** binary in the [experiment/argu_static/tool/bin](reprobench/experiment/argu_static/tool/bin) (named _mu_toksia_)
+    Put the compiled `mu_toksia` binary in the [experiment/argu_static/tool/bin](reprobench/experiment/argu_static/tool/bin) (named _mu_toksia_)
 3. download [runsolver](https://github.com/daajoe/runsolver) and build it. It is possible that you will lack the `numa.h` library, install it with:
     ```
     sudo apt-get install libnuma-dev
     ```
-    Put the compiled **runsolver** into the ~/bin/directory
+    Put the compiled `runsolver` into the ~/bin/directory
 4. Install [clingo](https://github.com/potassco/clingo).
 5. Download and setup `config.json` in DPDB. Create necessary conda environment.
 6. Edit the [experiment/argu_static/tool/bin/argu_solver.sh](reprobench/experiment/argu_static/tool/bin) file, set the variables:
     - `custom_conda_location` - path to `conda` (or `miniconda`) if not installed in the default location,
     - `conda_env_name` - name of the conda environment that serves running `DPDB`,
-    - `dpdb_location` - path to **DPDB**
+    - `dpdb_location` - path to `DPDB`
     - `clingo_location` - path to `clingo`
 5. In order to allow the to run [./purgeDB.sh](experiment/argu_static/tool/bin/purgeDB.sh), you need to change in your local Postgres configuration (most likely file `/etc/postgresql/<VERSION>/main/pg_hba.conf`) the line:
 
