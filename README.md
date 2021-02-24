@@ -20,7 +20,7 @@ ___
     ```
     sudo apt-get install libz-dev
     ```
-    Put the compiled **mu_toksia** binary in the [reprobench/experiment/argu_static/tool/bin](reprobench/experiment/argu_static/tool/bin) (named _mu_toksia_)
+    Put the compiled **mu_toksia** binary in the [experiment/argu_static/tool/bin](reprobench/experiment/argu_static/tool/bin) (named _mu_toksia_)
 3. download [runsolver](https://github.com/daajoe/runsolver) and build it. It is possible that you will lack the `numa.h` library, install it with:
     ```
     sudo apt-get install libnuma-dev
@@ -28,12 +28,12 @@ ___
     Put the compiled **runsolver** into the ~/bin/directory
 4. Install [clingo](https://github.com/potassco/clingo).
 5. Download and setup `config.json` in DPDB. Create necessary conda environment.
-6. Edit the [reprobench/experiment/argu_static/tool/bin/argu_solver.sh](reprobench/experiment/argu_static/tool/bin) file, set the variables:
+6. Edit the [experiment/argu_static/tool/bin/argu_solver.sh](reprobench/experiment/argu_static/tool/bin) file, set the variables:
     - `custom_conda_location` - path to `conda` (or `miniconda`) if not installed in the default location,
     - `conda_env_name` - name of the conda environment that serves running `DPDB`,
     - `dpdb_location` - path to **DPDB**
     - `clingo_location` - path to `clingo`
-5. In order to allow the to run [./purgeDB.sh](reprobench/experiment/argu_static/tool/bin/purgeDB.sh), you need to change in your local Postgres configuration (most likely file `/etc/postgresql/<VERSION>/main/pg_hba.conf`) the line:
+5. In order to allow the to run [./purgeDB.sh](experiment/argu_static/tool/bin/purgeDB.sh), you need to change in your local Postgres configuration (most likely file `/etc/postgresql/<VERSION>/main/pg_hba.conf`) the line:
 
     ```
     local   all             postgres                            peer
@@ -62,7 +62,7 @@ ___
     language plpgsql security definer volatile set search_path = pg_catalog;'
     ```
     Which should create the function (if not yet created)
-5. (Optionally) add more input instances from http://argumentationcompetition.org/2019/iccma-instances.tar.gz (edit [reprobench/experiment/argu_static/argu_static.yml](reprobench/experiment/argu_static/argu_static.yml))
+5. (Optionally) add more input instances from http://argumentationcompetition.org/2019/iccma-instances.tar.gz (edit [experiment/argu_static/argu_static.yml](experiment/argu_static/argu_static.yml))
 5. Run the [run_server.py](run_server.py) 
     ```
     python run_server.py
@@ -73,7 +73,7 @@ ___
     ```
 ___
 ## In case of problems...
-- if you get the following `Workload failed: Permission denied` in the output files, try allowing the *.sh files in [reprobench/experiment/argu_static/tool/bin](reprobench/experiment/argu_static/tool/bin) to be executed by:
+- if you get the following `Workload failed: Permission denied` in the output files, try allowing the *.sh files in [experiment/argu_static/tool/bin](reprobench/argu_static/tool/bin) to be executed by:
     ```
     chmod +x <FILE>
     ``` 
