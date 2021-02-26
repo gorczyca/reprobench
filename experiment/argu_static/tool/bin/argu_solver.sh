@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # >>>>>> Set variables 
-custom_conda_location="$HOME/System/programs/anaconda3" # Set when anaconda (or miniconda) is not installed in the default location
-conda_env_name="nesthdb" # name of conda environment, default should be "rb" 
-dpdb_location="Dresden/3sem/project/fixing_bug/dp_on_dbs" # DPDB location
-clingo_location="$HOME/System/programs/anaconda3/bin/clingo"
+custom_conda_location="$HOME/miniconda3" # Set when anaconda (or miniconda) is not installed in the default location
+conda_env_name="rb" # name of conda environment, default should be "rb" 
+dpdb_location="$HOME/dp_on_dbs" # DPDB location
+clingo_location="$HOME/miniconda3/envs/rb/bin/clingo"
 # <<<<<<<<<<<<<<<<<<<<
 
 
@@ -156,7 +156,7 @@ if [ "$solver" == "dpdb" ]; then
 	unset __conda_setup
 	# <<< conda initialize <<<
 	conda activate "$conda_env_name"
-	env $env $myconda/envs/$conda_env_name/bin/python3 $HOME/$dpdb_location/dpdb.py --config $HOME/$dpdb_location/config.json -f $filename $sem  &
+	env $env $myconda/envs/$conda_env_name/bin/python3 $dpdb_location/dpdb.py --config $dpdb_location/config.json -f $filename $sem  &
   # for argumentation default input format is apx, if tgf then need to add: --input-format tgf
 else
   # echo "env $solver_cmd"
