@@ -2,8 +2,8 @@
 
 # >>>>>> Set variables 
 custom_conda_location="$HOME/miniconda3" # Set when anaconda (or miniconda) is not installed in the default location
-conda_env_name="rb" # name of conda environment, default should be "rb" 
-dpdb_location="$HOME/dp_on_dbs" # DPDB location
+conda_env_name="rb2" # name of conda environment, default should be "rb" 
+dpdb_location=$(realpath $(dirname $0)/../../../../../dp_on_dbs/) # DPDB location
 clingo_location="$HOME/miniconda3/envs/rb/bin/clingo"
 # <<<<<<<<<<<<<<<<<<<<
 
@@ -156,7 +156,8 @@ if [ "$solver" == "dpdb" ]; then
 	unset __conda_setup
 	# <<< conda initialize <<<
 	conda activate "$conda_env_name"
-	env $env $myconda/envs/$conda_env_name/bin/python3 $dpdb_location/dpdb.py --config $dpdb_location/config.json -f $filename $sem  &
+	echo $dpdb_location
+	env $env $dpdb_location/run_dpdb.sh $filename $sem  &
   # for argumentation default input format is apx, if tgf then need to add: --input-format tgf
 else
   # echo "env $solver_cmd"
