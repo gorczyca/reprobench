@@ -2,11 +2,12 @@
 
 # >>>>>> Set variables 
 custom_conda_location="$HOME/miniconda3" # Set when anaconda (or miniconda) is not installed in the default location
-conda_env_name="rb" # name of conda environment, default should be "rb" 
-dpdb_location="$HOME/dp_on_dbs" # DPDB location
-clingo_location="$HOME/miniconda3/envs/rb/bin/clingo"
-# <<<<<<<<<<<<<<<<<<<<
-
+conda_env_name="dpdb_env" # name of conda environment, default should be "rb" 
+dpdb_location=$(realpath $(dirname $0)/../../../../../dp_on_dbs/) # DPDB location
+clingo_location="$HOME/miniconda3/envs/$conda_env_name/bin/clingo"
+gringo_location="$HOME/miniconda3/envs/$conda_env_name/bin/gringo"
+binaries_location="$HOME/reprobench/experiment/argu_static/tool/bin/binaries"
+# <<<<<<<<<<<
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
@@ -92,7 +93,7 @@ elif [ "$solver" == "aspartix" ] ; then
     if [ "$semantics" == "stable" ] ; then
         sem="aspartix/stable.dl"
     elif [ "$semantics" == "complete" ] ; then
-        sem="aspartix/comp.dl" ;    
+        sem="aspartix/comp.dl"     
     elif [ "$semantics" == "admissible" ] ; then
         sem="aspartix/adm.dl"
     else 
@@ -101,9 +102,32 @@ elif [ "$solver" == "aspartix" ] ; then
     fi    
     # clingo required
     solver_cmd="$clingo_location $filename $sem aspartix/filter.lp 0 --quiet=3"
+elif [ "$solver" == "d4" ] ; then
+    if [ "$semantics" == "stable" ] ; then
+	sem="aspartix/stable.dl"
+    elif [ "$semantics" == "complete" ] ; then
+        sem="aspartix/comp.dl" 
+    elif [ "$semantics" == "admissible" ] ; then
+       sem="aspartix/adm.dl"
+    else 
+        echo "Given semantics not supported by $solver. Exiting..."
+        exit 1
+    fi
+    # gringo required!!!
+    #dir = $(dirname 0)
+    #solver_cmd="$gringo_location --output=smodels $filename $sem | $dir/binaries/lp2normal-2.18 | $dir/binaries/lp2atomic-1.17 | $dir/binaries/lp2sat-1.24 | $dir/binaries/d4 /dev/stdin"
+    #solver_cmd="./d4_bash.sh $sem $filename"
+    $gringo_location --output=smodels $filename $sem | $binaries_location/lp2normal-2.18 | $binaries_location/lp2atomic-1.17 | $binaries_location/lp2sat-1.24 | $binaries_location/d4 /dev/stdin
+    
+    PID=$!
+    wait $PID
+    exit_code=$?
+    echo "Solver finished with exit code="$exit_code
+    exit $exit_code
 elif [ "$solver" == "dpdb" ] ; then
     # purge databases
-    ./purgeDB.sh
+    #./purgeDB.sh
+    ./purgedb2-cp.sh
     if [ "$semantics" == "stable" ] ; then
         sem="CEStable"
     elif [ "$semantics" == "complete" ] ; then
@@ -156,10 +180,12 @@ if [ "$solver" == "dpdb" ]; then
 	unset __conda_setup
 	# <<< conda initialize <<<
 	conda activate "$conda_env_name"
-	env $env $myconda/envs/$conda_env_name/bin/python3 $dpdb_location/dpdb.py --config $dpdb_location/config.json -f $filename $sem  &
+	echo $dpdb_location
+	env $env $dpdb_location/run_dpdb.sh $filename $sem apx &
+	# env $env $myconda/envs/$conda_env_name/bin/python3 $dpdb_location/dpdb.py --config $dpdb_location/config.json -f $filename $sem  &
   # for argumentation default input format is apx, if tgf then need to add: --input-format tgf
 else
-  # echo "env $solver_cmd"
+  echo "env $solver_cmd"
   env $solver_cmd &
   # echo "env $env $solver_cmd $filename"
   # env $env $solver_cmd $filename &

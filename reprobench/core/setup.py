@@ -54,7 +54,7 @@ class SetupKernel(Step):
                     driver = driver_fh.read().replace('\n', '')
                     logger.info(f"Driver was {driver}")
                 logger.error(driver)
-                if driver == 'intel_pstate':
+                if driver in ('intel_pstate', 'intel_cpufreq'):
                     # Deactivate Turbo
                     # echo 1 | sudo  tee /sys/devices/system/cpu/intel_pstate/no_turbo
                     cls.governor_deactivate_turbo_intel()

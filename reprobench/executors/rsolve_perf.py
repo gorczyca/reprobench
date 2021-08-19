@@ -188,7 +188,7 @@ class RunSolverPerfEval(Executor):
 
         cmdline[0] = str(pathlib.Path(cmdline[0]).resolve())
 
-        with tempfile.NamedTemporaryFile(prefix='rsolve_perf_tmp', dir='/dev/shm', delete=True) as f:
+        with tempfile.NamedTemporaryFile(prefix='rsolve_perf_tmp', dir='/tmp', delete=True) as f:
             logger.debug(f"Extracting instance {input_str} to {f.name}")
             if "-f" in input_str:
                 input_str = input_str.split(" ")[1]
